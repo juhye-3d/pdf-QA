@@ -39,6 +39,12 @@ def split_text(text, chunk_size=3000, overlap=300):
         start += chunk_size - overlap
     return chunks
 
+def check_url_is_pdf(url):
+    res = requests.get(url)
+    print("Content-Type:", res.headers.get("Content-Type"))
+    print("첫 300자:", res.content[:300])
+
+
 # TF-IDF 기반 유사 chunk 추출
 def get_most_similar_chunks(query, chunks, top_n=2):
     corpus = chunks + [query]  # 전체 문서 chunk + 질문

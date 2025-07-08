@@ -4,7 +4,7 @@ import os
 import streamlit as st
 import requests
 import io
-from PyPDF2 import PdfReader
+import pdfplumber
 from openai import OpenAI
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -13,18 +13,18 @@ from sklearn.metrics.pairwise import cosine_similarity
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 # PDF 텍스트 추출
-def get_pdf_text_from_url(url: str) -> str:
+def get_pdf_text_with_plumber(url):
     try:
         response = requests.get(url)
         response.raise_for_status()
         with io.BytesIO(response.content) as f:
-            reader = PdfReader(f)
-            text = ""
-            for page in reader.pages:
-                page_text = page.extract_text()
-                if page_text:
-                    text += page_text + "\n"
-            return text.strip()
+            with pdfplumber.open(f) as pdf:
+                text = ""
+                for page in pdf.pages:
+                    page_text = page.extract_text()
+                    if page_text:
+                        text += page_text + "\n"
+                return text.strip()
     except Exception as e:
         return f"[PDF 불러오기 실패] {e}"
 

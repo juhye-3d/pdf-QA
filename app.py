@@ -77,7 +77,7 @@ pdf_url = st.text_input("🔗 PDF 링크를 입력하세요",
 # PDF 로딩
 if st.button("📥 PDF 불러오기"):
     with st.spinner("PDF에서 텍스트를 추출 중입니다..."):
-        full_text = get_pdf_text_from_url(pdf_url)
+        full_text = get_pdf_text_with_plumber(pdf_url)
 
     if full_text.startswith("[PDF 불러오기 실패]"):
         st.error(full_text)

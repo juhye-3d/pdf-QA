@@ -1,5 +1,6 @@
 # streamlit_pdf_rag_tfidf.py
 
+import os
 import streamlit as st
 import requests
 import io

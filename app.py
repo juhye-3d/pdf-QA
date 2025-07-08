@@ -63,7 +63,7 @@ def stream_gpt_response(prompt: str):
     )
     full_response = ""
     for chunk in response:
-        delta = chunk.choices[0].delta.get("content", "")
+        delta = chunk.choices[0].delta.content or ""  
         full_response += delta
         yield delta
     return full_response

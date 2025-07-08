@@ -9,7 +9,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 # OpenAI API 키 입력
-client = OpenAI(api_key="YOUR_API_KEY")
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 # PDF 텍스트 추출
 def get_pdf_text_from_url(url: str) -> str:
